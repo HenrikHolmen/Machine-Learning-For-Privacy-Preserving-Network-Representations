@@ -1,0 +1,15 @@
+# Python bytecode and cache files
+__pycache__/
+*.py[cod]
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# VsCode Settings
+.vscode/
+
+# OS files
+.DS_Store
+
+# Other 
+x_old_code_old/
