@@ -145,9 +145,11 @@ def draw_colored_graph(G, z, layout, save_path, step=None):
         with_labels=False,
         node_size=50,
         cmap=cmap,
-        edge_color="black",
-        width=0.6,
+        edge_color="gray",
+        width=0.4,
         alpha=1.0,
+        edgecolors="black",
+        linewidths=0.3,
     )
 
     filename = f"step_{step}.png" if step is not None else "snapshot.png"

@@ -9,12 +9,12 @@ import time
 
 
 # Arguments
-K = 10  # Used before: 5, 10
-n = 100  # Used before: 100,100
-num_blocks = 5  # Used before: 5
+K = 15  # Tried 5
+n = 100  # Tried 100
+num_blocks = 5
 p_in = 0.5
-p_out = 0.05
-seed = 210659
+p_out = 0.01
+seed = 2025
 
 filename_suffix = f"n{n}_K{K}_seed{seed}"
 
@@ -37,9 +37,11 @@ nx.draw(
     with_labels=False,
     node_size=50,
     cmap=cmap,
-    edge_color="black",
-    width=0.6,
+    edge_color="gray",
+    width=0.4,
     alpha=1.0,
+    edgecolors="black",
+    linewidths=0.3,
 )
 plt.title(
     f"SBM Graph (n={n}, blocks={num_blocks}, p_in={p_in}, p_out={p_out}, seed={seed})"

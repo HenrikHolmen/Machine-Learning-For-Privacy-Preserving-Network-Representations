@@ -11,12 +11,12 @@ import time
 
 
 # Arguments
-K = 5  # Used before:
+K = 15  # Used before:
 n = 100  # Used before:
 num_blocks = 5  # Used before:
 p_in = 0.5
-p_out = 0.05
-seed = 210659
+p_out = 0.01
+seed = 2025
 
 filename_suffix = f"n{n}_K{K}_seed{seed}"
 
@@ -31,7 +31,21 @@ G, ground_truth_assignment_vector = generate_sbm_graph(n, num_blocks, p_in, p_ou
 # Visualize
 color_map = [ground_truth_assignment_vector[node] for node in G.nodes()]
 cmap = plt.get_cmap("tab20b", len(set(color_map)))
-nx.draw_spring(G, node_color=color_map, with_labels=False, node_size=50, cmap=cmap)
+# nx.draw_spring(G, node_color=color_map, with_labels=False, node_size=50, cmap=cmap)
+layout = nx.spring_layout(G, seed=seed)
+nx.draw(
+    G,
+    pos=layout,
+    node_color=color_map,
+    with_labels=False,
+    node_size=50,
+    cmap=cmap,
+    edge_color="gray",
+    width=0.4,
+    alpha=1.0,
+    edgecolors="black",
+    linewidths=0.3,
+)
 plt.title(
     f"SBM Graph (n={n}, blocks={num_blocks}, p_in={p_in}, p_out={p_out}, seed={seed})"
 )
