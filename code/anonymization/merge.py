@@ -11,7 +11,7 @@ import networkx as nx
 import os
 
 
-def agglomerative_merge(A, K, verbose=False, seed=None):
+def agglomerative_merge(A, K, verbose=False, seed=None, dataset=None):
     """
     Runs the Agglomerative Merge Algorithm to enforce K-anonymity.
 
@@ -33,8 +33,14 @@ def agglomerative_merge(A, K, verbose=False, seed=None):
     if verbose:
         print(f"Initialized {num_nodes} singleton blocks.")
 
-    snapshot_dir = f"data/results/plots/merge/snapshots/n{num_nodes}_K{K}"
+    if dataset is not None:
+        snapshot_dir = f"data/results/real/{dataset}/merge/snapshots/n{num_nodes}_K{K}"
+        merge_output_dir = f"data/results/real/{dataset}/merge"
+    else:
+        snapshot_dir = f"data/results/synthetic/plots/merge/snapshots/n{num_nodes}_K{K}"
+        merge_output_dir = "data/results/synthetic/merge"
     os.makedirs(snapshot_dir, exist_ok=True)
+    os.makedirs(merge_output_dir, exist_ok=True)
 
     merge_step = 0  # Tracking how many merges are performed
     log_likelihood_trace = []  # Keep tract on how the log-likelihood changes over time
@@ -86,7 +92,7 @@ def agglomerative_merge(A, K, verbose=False, seed=None):
 
         if verbose:
             print(
-                f"Merge blocks {block_l_star} and {block_m_star} with \u0394 log-likelihood = {min_delta:.4f}"
+                f"Merge blocks {block_l_star} and {block_m_star} with Δ log-likelihood = {min_delta:.4f}"
             )
 
     # FALLBACK STEP: Force-merge remaining small blocks
@@ -130,28 +136,21 @@ def agglomerative_merge(A, K, verbose=False, seed=None):
     current_log_likelihood = compute_log_likelihood(A, block_assignment_vector, B_post)
     log_likelihood_trace.append(current_log_likelihood)
 
-    os.makedirs("data/results/merge", exist_ok=True)
     # save final log-likelihood trace
-    np.save(
-        f"data/results/merge/log_likelihood_trace_{num_nodes}_K{K}.npy",
-        np.array(log_likelihood_trace),
-    )
+    np.save(f"{merge_output_dir}/log_likelihood_trace_{num_nodes}_K{K}.npy", np.array(log_likelihood_trace))
 
     # save final block sizes
     final_block_sizes = [
         block_assignment_vector.count(b) for b in set(block_assignment_vector)
     ]
-    np.save(
-        f"data/results/merge/final_block_sizes_{num_nodes}_K{K}.npy",
-        np.array(final_block_sizes),
-    )
+    np.save(f"{merge_output_dir}/final_block_sizes_n{num_nodes}_K{K}_seed{seed}.npy", np.array(final_block_sizes))
 
     # save number of resulting blocks
-    with open(f"data/results/merge/final_num_blocks_{num_nodes}_K{K}.txt", "w") as f:
+    with open(f"{merge_output_dir}/final_num_blocks_{num_nodes}_K{K}.txt", "w") as f:
         f.write(str(len(set(block_assignment_vector))))
 
     # Save total number of merge steps
-    with open(f"data/results/merge/total_merge_steps_{num_nodes}_K{K}.txt", "w") as f:
+    with open(f"{merge_output_dir}/total_merge_steps_{num_nodes}_K{K}.txt", "w") as f:
         f.write(str(merge_step))
 
     block_assignment_vector_anonymized = block_assignment_vector

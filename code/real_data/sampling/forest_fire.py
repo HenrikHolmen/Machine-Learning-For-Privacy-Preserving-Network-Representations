@@ -4,9 +4,7 @@ import numpy as np
 from random import random, seed
 
 
-def forest_fire_sampling(
-    G, target_size=target_size, fw_prob=fw_prob, seed_value=seed_value
-):
+def forest_fire_sampling(G, target_size, fw_prob, seed_value):
     """
     Forest Fire sampling algorithm to extract a representative subgraph.
 
@@ -47,40 +45,38 @@ def forest_fire_sampling(
 
 
 if __name__ == "__main__":
-    dataset_name = "ca-hepth"  # change to "enron" or "facebook" when needed
-    input_path = f"real_data/datasets/{dataset_name}/processed_data.txt"
-    output_dir = f"real_data/datasets/{dataset_name}"
-
-    # Load raw or processed graph
-    G_full = nx.read_edgelist(input_path, nodetype=int)
-    print(
-        f"[INFO] Loaded graph with {G_full.number_of_nodes()} nodes and {G_full.number_of_edges()} edges."
-    )
+    dataset_name = "ca-hepth"  # change to "ca-hepth" or "enron" or "facebook" as needed
+    input_path = f"code/real_data/datasets/{dataset_name}/processed_data.txt"
+    output_dir = f"data/real/{dataset_name}"
+    os.makedirs(output_dir, exist_ok=True)
 
     # Parameters
-    target_size = 100
+    target_size = 200
     seed_value = 210659
     fw_prob = 0.7
 
-    # Run Forest Fire sampling
-    G_sampled, sampled_nodes = forest_fire_sampling(
-        G_full, target_size=target_size, fw_prob=fw_prob, seed_value=seed_value
-    )
+    # Load graph
+    G_full = nx.read_edgelist(input_path, nodetype=int)
+    print(f"[INFO] Loaded graph with {G_full.number_of_nodes()} nodes and {G_full.number_of_edges()} edges.")
+
+    # Sample
+    G_sampled, sampled_nodes = forest_fire_sampling(G_full, target_size, fw_prob, seed_value)
     print(f"[INFO] Sampled {len(sampled_nodes)} nodes.")
 
-    # Save results
-    os.makedirs(output_dir, exist_ok=True)
-
+    # Save edge list
     nx.write_edgelist(
         G_sampled,
         f"{output_dir}/sampled_edges_n{target_size}_seed{seed_value}.txt",
         data=False,
     )
 
-    with open(
-        f"{output_dir}/sampled_nodes_n{target_size}_seed{seed_value}.txt", "w"
-    ) as f:
+    # Save node list
+    with open(f"{output_dir}/sampled_nodes_n{target_size}_seed{seed_value}.txt", "w") as f:
         for node in sampled_nodes:
             f.write(f"{node}\n")
 
-    print(f"[INFO] Saved sampled edges and node list to {output_dir}")
+    # Save adjacency matrix
+    A = nx.to_numpy_array(G_sampled, dtype=int)
+    np.save(f"{output_dir}/adjacency_A_{dataset_name}_n{target_size}_seed{seed_value}.npy", A)
+
+    print(f"[INFO] Saved files to {output_dir}")
