@@ -1,9 +1,4 @@
-from anonymization.utils import (
-    compute_log_likelihood,
-    compute_block_probability_matrix,
-    find_best_merge,
-    draw_colored_graph,
-)
+from anonymization.utils import compute_log_likelihood, compute_block_probability_matrix, find_best_merge,draw_colored_graph
 from collections import defaultdict
 from itertools import combinations
 import numpy as np
@@ -137,7 +132,7 @@ def agglomerative_merge(A, K, verbose=False, seed=None, dataset=None):
     log_likelihood_trace.append(current_log_likelihood)
 
     # save final log-likelihood trace
-    np.save(f"{merge_output_dir}/log_likelihood_trace_{num_nodes}_K{K}.npy", np.array(log_likelihood_trace))
+    np.save(f"{merge_output_dir}/log_likelihood_trace_n{num_nodes}_K{K}_seed{seed}.npy", np.array(log_likelihood_trace))
 
     # save final block sizes
     final_block_sizes = [

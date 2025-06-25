@@ -45,14 +45,14 @@ def forest_fire_sampling(G, target_size, fw_prob, seed_value):
 
 
 if __name__ == "__main__":
-    dataset_name = "ca-hepth"  # change to "ca-hepth" or "enron" or "facebook" as needed
+    dataset_name = "facebook"  # change to "ca-hepth" or "enron" or "facebook" as needed
     input_path = f"code/real_data/datasets/{dataset_name}/processed_data.txt"
     output_dir = f"data/real/{dataset_name}"
     os.makedirs(output_dir, exist_ok=True)
 
     # Parameters
     target_size = 200
-    seed_value = 210659
+    seed_value = 121212
     fw_prob = 0.7
 
     # Load graph

@@ -5,6 +5,33 @@ import os
 from collections import defaultdict
 
 
+def generate_anonymized_graph(z, B, seed=None):
+    """
+    Generates an anonymized adjacency matrix \hat{A} based on block assignments z and block probabilities B.
+
+    Parameters:
+        z (list): Block assignment vector
+        B (np.ndarray): Block probability matrix
+        seed (int): Optional random seed for reproducibility
+
+    Returns:
+        A_hat (np.ndarray): Anonymized adjacency matrix (n x n)
+    """
+    if seed is not None:
+        np.random.seed(seed)
+
+    n = len(z)
+    A_hat = np.zeros((n, n), dtype=int)
+
+    for i in range(n):
+        for j in range(i + 1, n):  # Only upper triangle
+            p = B[z[i]][z[j]]
+            if np.random.rand() < p:
+                A_hat[i, j] = 1
+                A_hat[j, i] = 1  # Ensure symmetry
+
+    return A_hat
+
 def compute_block_probability_matrix(A, z, num_blocks=None):
     """
     Computes the block probability matrix (B) given the current assignment vector z.
@@ -41,8 +68,7 @@ def compute_block_probability_matrix(A, z, num_blocks=None):
 
     return B, counts
 
-
-def compute_log_likelihood(A, z, B):
+def compute_log_likelihood(A, z, B): # Old version, which calculated entire log-likelihood after every 
     """
     Computes (scalar form) log-likelihood as described in report Equation 3.5:
         \log P(\mathbf{A}|z, \mathbf{B}) = \sum_{i<j} \mathbf{A}_{ij} \log (\mathbf{B}_{z_{i}z_{j}}) + (1-\mathbf{A}_{ij}) \log (1-\mathbf{B}_{z_{i}z_{j}})

@@ -1,5 +1,7 @@
 from anonymization.utils import compute_block_probability_matrix
-from anonymization.utils import compute_log_likelihood
+from anonymization.utils import compute_log_likelihood_full as compute_log_likelihood
+# from anonymization.utils import compute_log_likelihood_optimized as compute_log_likelihood
+# from anonymization.utils import compute_log_likelihood_delta
 import numpy as np
 import random
 from collections import defaultdict, Counter

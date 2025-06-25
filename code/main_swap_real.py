@@ -7,7 +7,7 @@ import time
 
 #    Parameters   
 dataset = "facebook"  # "ca-hepth" or "facebook" or "enron"
-n = 200
+n = 400
 K = 5
 seed = 210659
 filename_suffix = f"n{n}_K{K}_seed{seed}"

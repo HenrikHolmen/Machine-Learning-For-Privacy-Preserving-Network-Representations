@@ -1,15 +1,26 @@
-# Python bytecode and cache files
+# Cache and temp files
 __pycache__/
 *.py[cod]
-
-# Jupyter Notebook checkpoints
 .ipynb_checkpoints/
-
-# VsCode Settings
 .vscode/
-
-# OS files
 .DS_Store
+
+# Results (output files)
+data/results/
+*.npy
+*.txt
+*.png
+*.pdf
+*.csv
+*.log
+
+data/synthetic/
+*.npy
+*.json
+*.png
+*.txt
 
 # Other 
 x_old_code_old/
+repo_summary.ipynb
+file_structure.py

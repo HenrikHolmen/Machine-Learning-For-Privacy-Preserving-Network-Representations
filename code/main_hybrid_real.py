@@ -8,10 +8,10 @@ import os
 import time
 
 # Arguments
-K = 15
+K = 1
 n = 100
-seed = 2025
-dataset = "facebook"  # change into "ca-hepth" or "facebook" or "enron"
+seed = 210659
+dataset = "ca-hepth"  # change into "ca-hepth" or "facebook" or "enron"
 
 filename_suffix = f"n{n}_K{K}_seed{seed}"
 adjacency_path = f"data/real/{dataset}/adjacency_A_{dataset}_n{n}_seed{seed}.npy"
