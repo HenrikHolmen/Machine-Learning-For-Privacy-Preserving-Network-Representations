@@ -10,9 +10,6 @@ data/results/
 *.npy
 *.txt
 *.png
-*.pdf
-*.csv
-*.log
 
 data/synthetic/
 *.npy
@@ -24,3 +21,11 @@ data/synthetic/
 x_old_code_old/
 repo_summary.ipynb
 file_structure.py
+notebooks/folder_structure.py
+
+# --- Ignore all raw sampled data files ---
+data/real/**/sampled_*.txt
+data/real/**/adjacency_*.npy
+data/synthetic/*.npy
+data/**/z_assignment_*.npy
+data/**/z_anonymized_*.npy
