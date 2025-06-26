@@ -9,7 +9,7 @@ import time
 K = 15
 n = 100
 seed = 210659
-dataset = "enron"  # change to "ca-hepth" or "facebook" or "enron"
+dataset = "ca-hepth"  # change to "ca-hepth" or "facebook" or "enron"
 
 filename_suffix = f"n{n}_K{K}_seed{seed}"
 input_path = f"data/real/{dataset}/adjacency_A_{dataset}_n{n}_seed{seed}.npy"

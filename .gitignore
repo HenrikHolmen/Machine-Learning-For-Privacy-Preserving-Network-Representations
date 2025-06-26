@@ -5,6 +5,12 @@ __pycache__/
 .vscode/
 .DS_Store
 
+# Ignore JSON files by default
+*.json
+
+# But allow utility results
+!data/results/**/utilities_*.json
+
 # Results (output files)
 data/results/
 *.npy
@@ -13,7 +19,6 @@ data/results/
 
 data/synthetic/
 *.npy
-*.json
 *.png
 *.txt
 
@@ -22,6 +27,7 @@ x_old_code_old/
 repo_summary.ipynb
 file_structure.py
 notebooks/folder_structure.py
+code/anonymization/swap_working.py
 
 # --- Ignore all raw sampled data files ---
 data/real/**/sampled_*.txt
@@ -29,3 +35,5 @@ data/real/**/adjacency_*.npy
 data/synthetic/*.npy
 data/**/z_assignment_*.npy
 data/**/z_anonymized_*.npy
+
+!github_image.png
